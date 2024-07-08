@@ -1,8 +1,10 @@
 import React from "react";
-import Todo from "../../model/todo.ts";
+import {Alert, Button, Pressable, TextInput, useColorScheme, View, StyleSheet} from "react-native";
 import {useDispatch} from "react-redux";
-import {Alert, Button, Pressable, TextInput, View} from "react-native";
-import {addTodo, updateTodo} from "../../store/redux/actions.ts";
+
+import {addTodo, updateTodo} from "../../store/redux/actions";
+import Todo from "../../model/todo";
+import {GlobalColors} from "../../constants/colors.ts";
 
 type TodoFormProps = {
     todo?: Todo,
@@ -13,29 +15,37 @@ function TodoForm({todo, setIsEditing}: TodoFormProps): React.JSX.Element {
 
     const [title, setTitle] = React.useState(todo?.title ?? "");
     const dispatch = useDispatch();
+    const isDarkMode = useColorScheme() === 'dark';
+
+    function isTitleValid(): boolean {
+        return title.trim().length !== 0
+    }
 
     function handleSubmit() {
-        console.log("handleSubmit");
-        if (todo) {
-            dispatch(updateTodo({...todo, title}));
-            if (setIsEditing) setIsEditing(false);
-        } else {
-            if (title.trim().length === 0) {
-                Alert.alert("Please enter a valid title");
-                return;
+        if (isTitleValid()) {
+            if (todo) {
+                dispatch(updateTodo({...todo, title}));
+                if (setIsEditing) setIsEditing(false);
+            } else {
+                dispatch(addTodo({
+                    id: Math.random().toString(),
+                    title
+                } as Todo));
+                setTitle("");
             }
-
-            dispatch(addTodo({
-                id: Math.random().toString(),
-                title
-            } as Todo));
-            setTitle("");
+        } else {
+            Alert.alert("Please enter a valid title");
         }
     }
 
     return (
-        <View style={styles.container}>
-            <TextInput style={styles.input} value={title} onChangeText={setTitle}/>
+        <View style={styles(isDarkMode).container}>
+            <TextInput
+                style={styles(isDarkMode).input}
+                value={title}
+                onChangeText={setTitle}
+                placeholderTextColor={isDarkMode ? GlobalColors.dark.hint : GlobalColors.light.hint}
+                placeholder="Todo title"/>
             <Pressable>
                 <Button title={(todo != null) ? "Update todo" : "Add todo"} onPress={handleSubmit}/>
             </Pressable>
@@ -45,16 +55,20 @@ function TodoForm({todo, setIsEditing}: TodoFormProps): React.JSX.Element {
 
 export default TodoForm;
 
-const styles = {
+const styles = (isDarkMode: boolean) => StyleSheet.create({
     container: {
-        marginBottom: 20
+        backgroundColor: isDarkMode ? GlobalColors.dark.footerBackground : GlobalColors.light.footerBackground,
+        paddingVertical: 10,
+        borderRadius: 10
     },
     input: {
         height: 40,
-        borderColor: 'gray',
+        borderColor: isDarkMode ? GlobalColors.dark.border : GlobalColors.light.border,
         borderWidth: 1,
         padding: 8,
-        borderRadius: 5,
-        marginBottom: 10
+        borderRadius: 10,
+        marginVertical: 10,
+        color: isDarkMode ? GlobalColors.dark.text : GlobalColors.light.text,
+        marginHorizontal: 10
     }
-};
+});
