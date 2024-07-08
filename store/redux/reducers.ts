@@ -1,6 +1,6 @@
 import {createReducer} from "@reduxjs/toolkit";
-import Todo from "../../model/todo.ts";
-import {addTodo, deleteTodo, setTodos, updateTodo} from "./actions.ts";
+import Todo from "../../model/todo";
+import {addTodo, deleteTodo, setTodos, updateTodo} from "./actions";
 
 interface TodoState {
     todos: Todo[]
