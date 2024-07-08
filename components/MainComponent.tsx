@@ -1,9 +1,10 @@
 import React from "react";
 import {View, StyleSheet, useColorScheme} from "react-native";
 
+import {GlobalColors} from "../constants/colors";
+
 import TodoForm from "./todo/TodoForm";
 import TodoList from "./todo/TodoList";
-import {GlobalColors} from "../constants/colors";
 import CustomHeader from "./UI/CustomHeader";
 
 function MainComponent(): React.JSX.Element {

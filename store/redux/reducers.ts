@@ -1,6 +1,6 @@
 import {createReducer} from "@reduxjs/toolkit";
 import Todo from "../../model/todo";
-import {addTodo, deleteTodo, setTodos, updateTodo} from "./actions";
+import {addTodo, deleteTodo, updateTodo} from "./actions";
 
 interface TodoState {
     todos: Todo[]
@@ -28,10 +28,6 @@ const todoReducers = createReducer(initialState,
                     state.todos[index] = action.payload;
                 }
             })
-            .addCase(setTodos, (state, action) => {
-                console.log("setTodos");
-                state.todos = action.payload;
-            });
     });
 
 export default todoReducers;

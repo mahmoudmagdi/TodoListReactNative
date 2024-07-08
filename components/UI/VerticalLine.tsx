@@ -1,6 +1,7 @@
 import React from "react";
 import {View, StyleSheet, useColorScheme} from "react-native";
-import {GlobalColors} from "../../constants/colors.ts";
+
+import {GlobalColors} from "../../constants/colors";
 
 type VerticalLineProps = {
     style?: any
