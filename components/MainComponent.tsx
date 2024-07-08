@@ -1,24 +1,29 @@
 import React from "react";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, useColorScheme} from "react-native";
 
-import TodoForm from "./todo/TodoForm.tsx";
-import TodoList from "./todo/TodoList.tsx";
+import TodoForm from "./todo/TodoForm";
+import TodoList from "./todo/TodoList";
+import {GlobalColors} from "../constants/colors";
+import CustomHeader from "./UI/CustomHeader";
 
 function MainComponent(): React.JSX.Element {
+
+    const isDarkMode = useColorScheme() === 'dark';
+
     return (
-        <View style={styles.container}>
-            <TodoForm/>
+        <View style={styles(isDarkMode).container}>
+            <CustomHeader/>
             <TodoList/>
+            <TodoForm/>
         </View>
     )
 }
 
 export default MainComponent;
 
-const styles = StyleSheet.create({
+const styles = (isDarkMode: boolean) => StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        marginTop: 50
+        backgroundColor: isDarkMode ? GlobalColors.dark.mainBackground : GlobalColors.light.mainBackground,
     }
 });
