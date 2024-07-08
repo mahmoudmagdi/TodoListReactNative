@@ -6,28 +6,49 @@
  */
 
 import React from 'react';
-import {SafeAreaView, useColorScheme} from 'react-native';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {
+    SafeAreaView,
+    useColorScheme,
+    StyleSheet,
+    KeyboardAvoidingView,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard
+} from 'react-native';
 import {Provider} from "react-redux";
-import store from "./store/redux/store.ts";
-import MainComponent from "./components/MainComponent.tsx";
+
+import store from "./store/redux/store";
+import MainComponent from "./components/MainComponent";
+import {GlobalColors} from "./constants/colors";
 
 function App(): React.JSX.Element {
 
     const isDarkMode = useColorScheme() === 'dark';
-
-    const backgroundStyle = {
-        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    };
+    const keyboardBehavior = Platform.OS === "ios" ? "padding" : "height";
 
     return (
         <Provider store={store}>
-            {/*<SafeAreaView style={backgroundStyle}>*/}
-                <MainComponent/>
-            {/*</SafeAreaView>*/}
+            <SafeAreaView style={styles(isDarkMode).container}>
+                <KeyboardAvoidingView
+                    behavior={keyboardBehavior}
+                    style={styles(isDarkMode).innerContainer}>
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        <MainComponent/>
+                    </TouchableWithoutFeedback>
+                </KeyboardAvoidingView>
+            </SafeAreaView>
         </Provider>
     )
 }
 
 export default App;
+
+const styles = (isDarkMode: boolean) => StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: isDarkMode ? GlobalColors.dark.headerBackground : GlobalColors.light.headerBackground,
+    },
+    innerContainer: {
+        height: "100%"
+    }
+});
