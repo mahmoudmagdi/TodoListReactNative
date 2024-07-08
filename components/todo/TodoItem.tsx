@@ -1,14 +1,18 @@
 import React from "react";
-import {Button, View, Text, StyleSheet} from "react-native";
+import {Button, View, Text, StyleSheet, useColorScheme} from "react-native";
 import {useDispatch} from "react-redux";
-import Todo from "../../model/todo.ts";
-import TodoForm from "./TodoForm.tsx";
-import {deleteTodo} from "../../store/redux/actions.ts";
+
+import Todo from "../../model/todo";
+import TodoForm from "./TodoForm";
+import {deleteTodo} from "../../store/redux/actions";
+import VerticalLine from "../UI/VerticalLine.tsx";
+import {GlobalColors} from "../../constants/colors.ts";
 
 function TodoItem({todo}: { todo: Todo }): React.JSX.Element {
 
     const [isEditing, setIsEditing] = React.useState(false);
     const dispatch = useDispatch();
+    const isDarkMode = useColorScheme() === 'dark';
 
     function editPressHandler() {
         setIsEditing(true);
@@ -19,20 +23,21 @@ function TodoItem({todo}: { todo: Todo }): React.JSX.Element {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles(isDarkMode).container}>
             {
                 isEditing ? (
                     <TodoForm todo={todo} setIsEditing={setIsEditing}/>
                 ) : (
-                    <>
-                        <Text style={styles.text}>
+                    <View>
+                        <Text style={styles(isDarkMode).text}>
                             {todo.title}
                         </Text>
-                        <View style={styles.buttonContainer}>
+                        <View style={styles(isDarkMode).buttonContainer}>
                             <Button title="Edit" onPress={editPressHandler}/>
+                            <VerticalLine style={styles(isDarkMode).verticalLine}/>
                             <Button title="Delete" onPress={deletePressHandler}/>
                         </View>
-                    </>
+                    </View>
                 )
             }
         </View>
@@ -41,19 +46,23 @@ function TodoItem({todo}: { todo: Todo }): React.JSX.Element {
 
 export default TodoItem;
 
-const styles = StyleSheet.create({
+const styles = (isDarkMode: boolean) => StyleSheet.create({
     container: {
-        padding: 10,
+        marginHorizontal: 10,
+        padding: 4,
         borderBottomWidth: 1,
-        borderBottomColor: "lightgrey"
+        borderBottomColor: isDarkMode ? GlobalColors.dark.border : GlobalColors.light.border
     },
     text: {
         fontSize: 18,
-        marginBottom: 10
+        color: isDarkMode ? GlobalColors.dark.text : GlobalColors.light.text
     },
     buttonContainer: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 10
+        justifyContent: "flex-end",
+        alignItems: "center"
+    },
+    verticalLine: {
+        height: 20
     }
 })
