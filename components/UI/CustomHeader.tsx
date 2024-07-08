@@ -1,8 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, useColorScheme} from "react-native";
-import {Colors} from "react-native/Libraries/NewAppScreen";
-import {GlobalColors} from "../../constants/colors.ts";
 
+import {GlobalColors} from "../../constants/colors";
 
 function CustomHeader(): React.JSX.Element {
 
@@ -11,7 +10,7 @@ function CustomHeader(): React.JSX.Element {
     return (
         <View style={styles(isDarkMode).container}>
             <Text style={styles(isDarkMode).title}>
-                Todo List Application
+                ToDo List Application
             </Text>
         </View>
     )

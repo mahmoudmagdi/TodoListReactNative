@@ -3,8 +3,8 @@ import {Alert, Button, Pressable, TextInput, useColorScheme, View, StyleSheet} f
 import {useDispatch} from "react-redux";
 
 import {addTodo, updateTodo} from "../../store/redux/actions";
+import {GlobalColors} from "../../constants/colors";
 import Todo from "../../model/todo";
-import {GlobalColors} from "../../constants/colors.ts";
 
 type TodoFormProps = {
     todo?: Todo,

@@ -2,9 +2,11 @@ import React from "react";
 import {FlatList, View, Text, StyleSheet, useColorScheme} from "react-native";
 import {useSelector} from "react-redux";
 
+import {RootState} from "../../store/redux/store";
+
 import Todo from "../../model/todo";
 import TodoItem from "./TodoItem";
-import {RootState} from "../../store/redux/store";
+import {GlobalColors} from "../../constants/colors.ts";
 
 function TodoList(): React.JSX.Element {
 
@@ -44,6 +46,6 @@ const styles = (isDarkMode: boolean) => StyleSheet.create({
     },
     emptyText: {
         fontSize: 20,
-        color: isDarkMode ? "white" : "black"
+        color: isDarkMode ? GlobalColors.dark.text : GlobalColors.light.text
     }
 });

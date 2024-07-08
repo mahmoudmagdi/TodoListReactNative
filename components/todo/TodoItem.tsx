@@ -2,11 +2,12 @@ import React from "react";
 import {Button, View, Text, StyleSheet, useColorScheme} from "react-native";
 import {useDispatch} from "react-redux";
 
-import Todo from "../../model/todo";
-import TodoForm from "./TodoForm";
 import {deleteTodo} from "../../store/redux/actions";
-import VerticalLine from "../UI/VerticalLine.tsx";
-import {GlobalColors} from "../../constants/colors.ts";
+import {GlobalColors} from "../../constants/colors";
+import Todo from "../../model/todo";
+
+import TodoForm from "./TodoForm";
+import VerticalLine from "../UI/VerticalLine";
 
 function TodoItem({todo}: { todo: Todo }): React.JSX.Element {
 
