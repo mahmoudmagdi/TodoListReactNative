@@ -8,9 +8,7 @@ import {
     TouchableWithoutFeedback,
     Keyboard
 } from 'react-native';
-import {Provider} from "react-redux";
 
-import store from "./store/redux/store";
 import MainComponent from "./components/MainComponent";
 import {GlobalColors} from "./constants/colors";
 
@@ -20,17 +18,15 @@ function App(): React.JSX.Element {
     const keyboardBehavior = Platform.OS === "ios" ? "padding" : "height";
 
     return (
-        <Provider store={store}>
-            <SafeAreaView style={styles(isDarkMode).container}>
-                <KeyboardAvoidingView
-                    behavior={keyboardBehavior}
-                    style={styles(isDarkMode).innerContainer}>
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <MainComponent/>
-                    </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        </Provider>
+        <SafeAreaView style={styles(isDarkMode).container}>
+            <KeyboardAvoidingView
+                behavior={keyboardBehavior}
+                style={styles(isDarkMode).innerContainer}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <MainComponent/>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 
