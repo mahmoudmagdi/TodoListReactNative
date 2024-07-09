@@ -8,7 +8,7 @@ export const GlobalColors = {
         border: "#616161",
     },
     light: {
-        mainBackground: "#bbbbbb",
+        mainBackground: "#eeeeee",
         headerBackground: "#FFFFFF",
         footerBackground: "#FFFFFF",
         text: "#000000",
