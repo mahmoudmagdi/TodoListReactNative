@@ -10,8 +10,8 @@ import App from '../App';
 import {it} from '@jest/globals';
 import {Provider} from 'react-redux';
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
 import store from '../store/redux/store';
+import {render} from "@testing-library/react-native";
 
 const ProviderApp = () => {
     return (
@@ -22,6 +22,6 @@ const ProviderApp = () => {
 };
 
 it('renders correctly', () => {
-    renderer.create(<ProviderApp/>);
+    render(<ProviderApp/>);
 });
 
