@@ -6,7 +6,7 @@ import {RootState} from "../../store/redux/store";
 
 import Todo from "../../model/todo";
 import TodoItem from "./TodoItem";
-import {GlobalColors} from "../../constants/colors.ts";
+import {GlobalColors} from "../../constants/colors";
 
 function TodoList(): React.JSX.Element {
 
