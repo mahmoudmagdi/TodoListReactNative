@@ -2,12 +2,12 @@ import React from "react";
 import {Button, View, Text, StyleSheet, useColorScheme} from "react-native";
 import {useDispatch} from "react-redux";
 
-import {deleteTodo} from "../../store/redux/actions";
 import {GlobalColors} from "../../constants/colors";
 import Todo from "../../model/todo";
 
 import TodoForm from "./TodoForm";
 import VerticalLine from "../UI/VerticalLine";
+import {removeTodoFromRealm} from "../../store/realm/todo-database";
 
 function TodoItem({todo}: { todo: Todo }): React.JSX.Element {
 
@@ -20,7 +20,7 @@ function TodoItem({todo}: { todo: Todo }): React.JSX.Element {
     }
 
     function deletePressHandler() {
-        dispatch(deleteTodo(todo.id));
+        dispatch(removeTodoFromRealm(todo._id));
     }
 
     return (

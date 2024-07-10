@@ -2,9 +2,10 @@ import React from "react";
 import {Alert, Button, Pressable, TextInput, useColorScheme, View, StyleSheet} from "react-native";
 import {useDispatch} from "react-redux";
 
-import {addTodo, updateTodo} from "../../store/redux/actions";
 import {GlobalColors} from "../../constants/colors";
 import Todo from "../../model/todo";
+import {saveTodoToRealm, updateTodoInRealm} from "../../store/realm/todo-database";
+import {getRandomInt} from "../../utils/Utils";
 
 type TodoFormProps = {
     todo?: Todo,
@@ -24,13 +25,15 @@ function TodoForm({todo, setIsEditing}: TodoFormProps): React.JSX.Element {
     function handleSubmit() {
         if (isTitleValid()) {
             if (todo) {
-                dispatch(updateTodo({...todo, title}));
+                dispatch(updateTodoInRealm(todo));
                 if (setIsEditing) setIsEditing(false);
             } else {
-                dispatch(addTodo({
-                    id: Math.random().toString(),
-                    title
-                } as Todo));
+                dispatch(saveTodoToRealm(
+                    {
+                        _id: getRandomInt(100),
+                        title: title
+                    } as Todo
+                ));
                 setTitle("");
             }
         } else {

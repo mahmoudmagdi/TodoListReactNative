@@ -1,17 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FlatList, View, Text, StyleSheet, useColorScheme} from "react-native";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {RootState} from "../../store/redux/store";
 
-import Todo from "../../model/todo";
 import TodoItem from "./TodoItem";
 import {GlobalColors} from "../../constants/colors";
+import Todo from "../../model/todo";
+import {loadTodosFromRealm} from "../../store/realm/todo-database";
+import realm from "../../store/realm/realmConfig";
 
 function TodoList(): React.JSX.Element {
 
-    const todos: Todo[] = useSelector((state: RootState) => state.todos.todos);
     const isDarkMode = useColorScheme() === 'dark';
+    const todos = useSelector((state: RootState) => state.todos);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const todos = realm.objects<Todo>('Todo');
+        console.log(todos); // Should output the list of todos
+    }, [dispatch]);
 
     function renderTodoItem({item}: { item: Todo }) {
         return (
@@ -19,18 +27,17 @@ function TodoList(): React.JSX.Element {
         );
     }
 
-    if (todos.length === 0) {
-        return (
-            <View style={styles(isDarkMode).emptyContainer}>
-                <Text style={styles(isDarkMode).emptyText}>No todos found</Text>
-            </View>
-        )
-    }
+    // if (todos.length === 0) {
+    //     return (
+    //         <View style={styles(isDarkMode).emptyContainer}>
+    //             <Text style={styles(isDarkMode).emptyText}>No todos found</Text>
+    //         </View>
+    //     )
+    // }
 
     return (
         <FlatList
             data={todos}
-            keyExtractor={(item: Todo) => item.id}
             renderItem={renderTodoItem}
         />
     )
