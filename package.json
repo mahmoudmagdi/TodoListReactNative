@@ -12,11 +12,13 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@realm/react": "^0.8.0",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-redux": "^7.1.25",
     "react": "18.2.0",
     "react-native": "0.74.3",
     "react-redux": "^7.2.1",
+    "realm": "^12.11.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },
