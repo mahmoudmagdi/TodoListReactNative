@@ -1,10 +1,11 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {configureStore, Tuple} from "@reduxjs/toolkit";
 import todoReducers from "./reducers";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 const store = configureStore({
-    reducer: {
-        todos: todoReducers,
-    }
+    reducer: todoReducers,
+    middleware: () => new Tuple<any>(thunk, logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
