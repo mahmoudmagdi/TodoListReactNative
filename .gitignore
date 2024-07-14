@@ -64,6 +64,7 @@ yarn-error.log
 
 # testing
 /coverage
+/default.realm.management
 
 # Yarn
 .yarn/*
@@ -72,3 +73,5 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+/default.realm.lock
+/default.realm
