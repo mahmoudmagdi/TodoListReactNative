@@ -1,17 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FlatList, View, Text, StyleSheet, useColorScheme} from "react-native";
-import {useSelector} from "react-redux";
-
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/redux/store";
 
-import Todo from "../../model/todo";
-import TodoItem from "./TodoItem";
 import {GlobalColors} from "../../constants/colors";
+import {Todo} from "../../model/todo";
+import {getTodoFromRealm} from "../../store/realm/todo-database";
+
+import TodoItem from "./TodoItem";
 
 function TodoList(): React.JSX.Element {
 
-    const todos: Todo[] = useSelector((state: RootState) => state.todos.todos);
+    const todos: Todo[] = useSelector((state: RootState) => state.todos);
     const isDarkMode = useColorScheme() === 'dark';
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getTodoFromRealm());
+    }, [dispatch]);
 
     function renderTodoItem({item}: { item: Todo }) {
         return (
@@ -30,7 +36,7 @@ function TodoList(): React.JSX.Element {
     return (
         <FlatList
             data={todos}
-            keyExtractor={(item: Todo) => item.id}
+            keyExtractor={(item: Todo) => item._id.toString()}
             renderItem={renderTodoItem}
         />
     )

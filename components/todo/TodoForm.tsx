@@ -2,9 +2,9 @@ import React from "react";
 import {Alert, Button, Pressable, TextInput, useColorScheme, View, StyleSheet} from "react-native";
 import {useDispatch} from "react-redux";
 
-import {addTodo, updateTodo} from "../../store/redux/actions";
 import {GlobalColors} from "../../constants/colors";
-import Todo from "../../model/todo";
+import {saveTodoToRealm, updateTodoInRealm} from "../../store/realm/todo-database";
+import {Todo} from "../../model/todo";
 
 type TodoFormProps = {
     todo?: Todo,
@@ -14,8 +14,8 @@ type TodoFormProps = {
 function TodoForm({todo, setIsEditing}: TodoFormProps): React.JSX.Element {
 
     const [title, setTitle] = React.useState(todo?.title ?? "");
-    const dispatch = useDispatch();
     const isDarkMode = useColorScheme() === 'dark';
+    const dispatch = useDispatch();
 
     function isTitleValid(): boolean {
         return title.trim().length !== 0
@@ -24,13 +24,15 @@ function TodoForm({todo, setIsEditing}: TodoFormProps): React.JSX.Element {
     function handleSubmit() {
         if (isTitleValid()) {
             if (todo) {
-                dispatch(updateTodo({...todo, title}));
+                const newTodo = {...todo, title};
+                dispatch(updateTodoInRealm(newTodo as Todo));
                 if (setIsEditing) setIsEditing(false);
             } else {
-                dispatch(addTodo({
-                    id: Math.random().toString(),
+                const todo = {
+                    _id: Math.floor(Math.random() * 1000),
                     title
-                } as Todo));
+                } as Todo;
+                dispatch(saveTodoToRealm(todo));
                 setTitle("");
             }
         } else {
